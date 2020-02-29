@@ -14,11 +14,11 @@ name = "name"
 
 
 
-datapath = "C:\\Users\\kbachu\\OneDrive - Infor\\Desktop\\CloudOps\\sumo\\commands_collectors1.xlsx"
+datapath = ""
 sheetname = "APP and Web Collectors"
 columnheading = "app_Web_GA_Collectors"
-accessid = "suelYBY3VuU4tR"
-accesskey = "V9CnJM9DNMjLyke4k1j3hSvtpCKY4BZoL4JXA6TMCFW6tkzG5KGIE131JvrqWE1h"
+accessid = "ACCESSID"
+accesskey = "ACCESSKEY"
 # outputfile = "outputfile_to_delete.txt"
 
 
