@@ -1,25 +1,29 @@
 import pandas as pd, shutil, os, fnmatch
 import Sumo_Library as library
 import chenna_confidential as ckkeys
-
+#  In the below sheet we have to provide data in the format  travelodge#INFORBCQASUN01#169898471
 basepath = "C:\\CloudOps\\sumo\\NON_GA"
 workbookname = "\\commands_collectors1.xlsx"
-sheetname = "Singles"
-columnname = "AppPrefix_Id"
+# sheetname = "Singles"
+sheetname = "WEB_Ids"
+columnname = "WebPrefix_Id"
 # Column name is very much important to have App Or Web Or QA in exact format as it will check contains text and flow through the corresponding code. 
 # columnname = "WebPrefix_Id"
-
+'''
 df = pd.read_excel(basepath + workbookname, sheet_name=sheetname) # can also index sheet by name or fetch all sheets
 NonGA_PrefixList = df[columnname].tolist()
+'''
 
-print("total count of Prefixes : " + str(len(NonGA_PrefixList)))
+PrefixList = library.getcollectorsfromExcel(basepath + workbookname, sheetname, columnname)
+
+print("total count of Prefixes : " + str(len(PrefixList)))
 
 # NonGA_PrefixList.clear()
 # NonGA_PrefixList.append("INFORBCBUS1#want2bthere#170652797")
 
 custprefix = "custprefix"   # string to replace with the customer prefix
 servername = "servername"    # string to replace with the customer server 
-outputfile = "output.txt"
+
 
 if("App" in columnname):
     template = "Sun_APP_Template"
@@ -34,9 +38,9 @@ elif ("QA" in columnname):
     
 accessid = ckkeys.accessid
 accesskey = ckkeys.accesskey
-f = open(basepath + "\\" + outputfile,'w')
 
-for i in NonGA_PrefixList:
+
+for i in PrefixList:
     # INFORBCBUS1#want2bthere#170652797
 
     NonGAValues = i.split('#')
@@ -51,13 +55,13 @@ for i in NonGA_PrefixList:
     
 
     if("App" in columnname):
-        print("curl -u \"" + (accessid) + ":" + (accesskey) + "\" -X POST -H \"Content-Type: application/json\" -T \"" + basepath + '\\' + outputfolder + '\\' +replace + "\\APP1.json\" https://api.sumologic.com/api/v1/collectors/" + id + "/sources", file=f)
+        print("curl -u \"" + (accessid) + ":" + (accesskey) + "\" -X POST -H \"Content-Type: application/json\" -T \"" + basepath + '\\' + outputfolder + '\\' +replace + "\\APP1.json\" https://api.sumologic.com/api/v1/collectors/" + id + "/sources", file=library.f)
         print("curl -u \"" + (accessid) + ":" + (accesskey) + "\" -X POST -H \"Content-Type: application/json\" -T \"" + basepath + '\\' + outputfolder + '\\' +replace + "\\APP1.json\" https://api.sumologic.com/api/v1/collectors/" + id + "/sources")
     elif ("Web" in columnname):
-        print("curl -u \"" + (accessid) + ":" + (accesskey) + "\" -X POST -H \"Content-Type: application/json\" -T \"" + basepath + '\\' + outputfolder + '\\' +replace + "\\WEB1.json\" https://api.sumologic.com/api/v1/collectors/" + id + "/sources", file=f)
+        print("curl -u \"" + (accessid) + ":" + (accesskey) + "\" -X POST -H \"Content-Type: application/json\" -T \"" + basepath + '\\' + outputfolder + '\\' +replace + "\\WEB1.json\" https://api.sumologic.com/api/v1/collectors/" + id + "/sources", file=library.f)
         print("curl -u \"" + (accessid) + ":" + (accesskey) + "\" -X POST -H \"Content-Type: application/json\" -T \"" + basepath + '\\' + outputfolder + '\\' +replace + "\\WEB1.json\" https://api.sumologic.com/api/v1/collectors/" + id + "/sources")
     elif ("QA" in columnname):
-        print("curl -u \"" + (accessid) + ":" + (accesskey) + "\" -X POST -H \"Content-Type: application/json\" -T \"" + basepath + '\\' + outputfolder + '\\' +replace + "\\QA1.json\" https://api.sumologic.com/api/v1/collectors/" + id + "/sources", file=f)
+        print("curl -u \"" + (accessid) + ":" + (accesskey) + "\" -X POST -H \"Content-Type: application/json\" -T \"" + basepath + '\\' + outputfolder + '\\' +replace + "\\QA1.json\" https://api.sumologic.com/api/v1/collectors/" + id + "/sources", file=library.f)
         print("curl -u \"" + (accessid) + ":" + (accesskey) + "\" -X POST -H \"Content-Type: application/json\" -T \"" + basepath + '\\' + outputfolder + '\\' +replace + "\\QA1.json\" https://api.sumologic.com/api/v1/collectors/" + id + "/sources")
     
 

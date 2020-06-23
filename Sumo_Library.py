@@ -7,7 +7,7 @@ import dictor
 import shutil, os, fnmatch
 import sys
 
-f = open("Output_to_Delete_Sources.txt",'w')
+f = open("Output.txt",'w')
 
 ''' This is WIP '''
 def verifyFields(fieldslist):
@@ -53,7 +53,7 @@ def copyfolder(source, destination):
 
 def getcollectorsfromExcel(path, sheet, columnname):
     '''
-    This method is used to get the daat from Excel by passing the path of excel workbook, sheet name and the column name.
+    This method is used to get the data from Excel by passing the path of excel workbook, sheet name and the column name.
     This method takes the following input: 
     1. Path = Excel workbookpath
     2. Sheet = Name of the sheet
